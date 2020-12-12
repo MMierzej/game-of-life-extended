@@ -13,6 +13,7 @@
 * jak podzielić projekt na pliki
 * jak komitować/merge'ować w zespole
 * zaznajomienie się z tkinter
+* GitKraken (?)
 
 ## Propozycje (dalsze kroki itd.)
 
