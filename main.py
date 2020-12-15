@@ -48,13 +48,14 @@ def next_state(prev):
 
     return result
 
+def modify(plansza, x, y): # zmienia stan komórki
+    if plansza[x][y] == 'o':
+        plansza[x][y] = '_'
+    elif plansza[x][y] == '_':
+        plansza[x][y] = 'o'
+
 # def show(state):
 #     for i in range(len(state)):
 #         for c in state[i]:
 #             print(c, end=' ')
 #         print()
-
-
-
-
-
