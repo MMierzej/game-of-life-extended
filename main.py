@@ -1,22 +1,22 @@
 import copy as cp
 import random
 
+
 DIRS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
 
 def generate(h, w):
     board = [[random.randint(0, 1) for i in range(w)] for j in range(h)]
     return board
 
-
-def draw(plansza):  # Funkcja wypisująca planszę do konsoli
-
+def draw(plansza):  # funkcja wypisująca planszę do konsoli
     for i in range(len(plansza)):
         for j in range(len(plansza[i])):
             if plansza[i][j] == 0:
                 print('_', end="")
             else:
                 print('o', end="")
-        print("")
+
+        print()
 
 def count_neighbours(field, x, y, lx, ly):
     counter = 0
@@ -24,7 +24,7 @@ def count_neighbours(field, x, y, lx, ly):
     for dx, dy in DIRS:
         nx = (x + dx) % lx
         ny = (y + dy) % ly
-        if field[ny][nx] == 'o':
+        if field[ny][nx] == 1:
             counter += 1
 
     return counter
@@ -40,22 +40,16 @@ def next_state(prev):
             neighbours = count_neighbours(prev, x, y, lx, ly)
 
             if neighbours == 3:
-                result[y][x] = 'o'
-            elif prev[y][x] == 'o' and neighbours == 2:
-                result[y][x] = 'o'
+                result[y][x] = 1 
+            elif prev[y][x] == 1 and neighbours == 2:
+                result[y][x] = 1
             else:
-                result[y][x] = '_'
+                result[y][x] = 0
 
     return result
 
 def modify(plansza, x, y): # zmienia stan komórki
-    if plansza[x][y] == 'o':
-        plansza[x][y] = '_'
-    elif plansza[x][y] == '_':
-        plansza[x][y] = 'o'
-
-# def show(state):
-#     for i in range(len(state)):
-#         for c in state[i]:
-#             print(c, end=' ')
-#         print()
+    if plansza[x][y] == 1:
+        plansza[x][y] = 0
+    elif plansza[x][y] == 0:
+        plansza[x][y] = 1
