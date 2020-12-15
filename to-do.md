@@ -9,13 +9,10 @@
     - 'o' dla zajętego pola przez żywą komórkę
 * [14.12.2020, Michał Mróz] funkcja, która przyjmuje planszę, koordynaty i pod podanymi współrzędnymi zmienia stan pola (żywy > martwy / martwy > żywy): modify(plansza, x, y)
 
+## Propozycje (dalsze kroki itd.)
+
 ## Niezwiązane z kodem
 * jak podzielić projekt na pliki
 * jak komitować/merge'ować w zespole
 * zaznajomienie się z tkinter
 * GitKraken (?)
-
-## Propozycje (dalsze kroki itd.)
-
-
-
