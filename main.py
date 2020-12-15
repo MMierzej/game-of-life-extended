@@ -1,6 +1,12 @@
 import copy as cp
+import random
 
 DIRS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
+
+def generate(h, w):
+    board = [[random.randint(0, 1) for i in range(w)] for j in range(h)]
+    return board
+
 
 def draw(plansza):  # Funkcja wypisująca planszę do konsoli
 
