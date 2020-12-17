@@ -6,7 +6,7 @@ import time
 DIRS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
 
 def generate(height, width):
-    board = [[random.randint(0, 1) for i in range(width)] for j in range(height)]
+    board = [[random.randint(0, 3) for i in range(width)] for j in range(height)]
     return board
 
 def draw(plansza):  # funkcja wypisująca planszę do konsoli

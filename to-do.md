@@ -2,8 +2,6 @@
 
 * [piątek 18.12., @all] przygotowanie propozycji rodzajów żywych komórek i interakcji (3 rodzaje i interakcje: 1 - 2, 1 - 3, 2 - 3)
 
-* [18.12., Mierzej] więcej rodzajów jednostek - dopisanie do generatora tych nowych jednostek (numery 1, 2, 3)
-
 * [18.12., Andrzej] drukowanie planszy z większą liczbą rodzajów jednostek (1 - 'o', 2 - 'x', 3 - '@')
 
 * [18.12., Michał] początek GUI (tkinter): przy odpaleniu programu wyskakuje puste okno (z przyciskami ewentualnie) < gui.py
@@ -14,6 +12,7 @@
 * [, Wojtek] testy oprogramowania (pytest)
 * [, ] ujednolicenie komentarzy i nazewnictwa (jeden styl i jeden język)
 * [, ] możliwość zakończenia symulacji, jeśli plansza się zapętli
+* [, ] generowanie losowej planszy, ale z określonym prawdopodobieństwem pojawienia się danego gatunku komórki
 
 ## Niezwiązane z kodem
 
@@ -32,6 +31,8 @@
     - '_' dla pustego pola
     - 'o' dla zajętego pola przez żywą komórkę
 * [14.12.2020, Michał Mróz] funkcja, która przyjmuje planszę, koordynaty i pod podanymi współrzędnymi zmienia stan pola (żywy > martwy / martwy > żywy): modify(plansza, x, y)
+
+* [18.12., Mierzej] więcej rodzajów jednostek - dopisanie do generatora tych nowych jednostek (numery 1, 2, 3)
 
 * [18.12., Wojtek] pętla o funkcjonalności wyświetlania zmian (pętla z dobrą kolejnością już napisanych funkcji)
 
