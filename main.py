@@ -14,8 +14,12 @@ def draw(plansza):  # funkcja wypisująca planszę do konsoli
         for j in range(len(plansza[i])):
             if plansza[i][j] == 0:
                 print('_', end="")
-            else:
-                print('o', end="")
+            elif plansza[i][j] == 1:
+                print('o', end = "")
+            elif plansza[i][j] == 2:
+                print('x', end="")
+            elif plansza[i][j] == 3:
+                print('@', end = "")
 
         print()
 
