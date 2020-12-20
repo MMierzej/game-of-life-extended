@@ -9,16 +9,16 @@ def generate(height, width):
     board = [[random.randint(0, 3) for i in range(width)] for j in range(height)]
     return board
 
-def draw(plansza):  # funkcja wypisująca planszę do konsoli
-    for i in range(len(plansza)):
-        for j in range(len(plansza[i])):
-            if plansza[i][j] == 0:
-                print('_', end="")
-            elif plansza[i][j] == 1:
+def draw(board):  # funkcja wypisująca planszę do konsoli
+    for i in range(len(board)):
+        for j in range(len(board[i])):
+            if board[i][j] == 0:
+                print(' ', end="")
+            elif board[i][j] == 1:
                 print('o', end = "")
-            elif plansza[i][j] == 2:
+            elif board[i][j] == 2:
                 print('x', end="")
-            elif plansza[i][j] == 3:
+            elif board[i][j] == 3:
                 print('@', end = "")
 
         print()
@@ -86,13 +86,13 @@ if __name__ == "__main__":
     board = [ [ int(c) for c in wiersz ] for wiersz in txt.split() ]
     prev = cp.deepcopy(board)
     counter = 0
-    interval = 1
+    interval = 5
     
     while counter < 150:
         if counter % interval == 0:
             draw(board)
             print("\n*****************************\n")
-            time.sleep(0.1)
+            time.sleep(0.2)
 
         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
         next_state(board, prev)   # ta funkcja generuje następny stan planszy (do zmiennej board)
