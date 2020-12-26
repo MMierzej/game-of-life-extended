@@ -24,7 +24,7 @@
 
 ### Propozycje (dalsze kroki itd.)
 
-* [ ] plik uruchamialny, zamiast samego kodu źródłowego
+- [ ] plik uruchamialny, zamiast samego kodu źródłowego
 
 ### Niezwiązane z kodem
 
