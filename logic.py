@@ -5,12 +5,14 @@ import time
 DIRS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
 
 
-def generate(height, width):  # generuje losową planszę z komorkami
+def generate(height, width):  
+    """generuje losową planszę z komorkami"""
     board = [[random.randint(0, 3) for i in range(width)] for j in range(height)]
     return board
 
 
-def repetition(board, board_list):  # sprawdza czy plansza się zapętla
+def repetition(board, board_list):  
+    """sprawdza czy plansza się zapętla"""
     string = ""
     for i in range(len(board)):
         for j in range(len(board[i])):
@@ -24,7 +26,8 @@ def repetition(board, board_list):  # sprawdza czy plansza się zapętla
         return False
 
 
-def draw(board):  # funkcja wypisująca planszę do konsoli
+def draw(board):  
+    """funkcja wypisująca planszę do konsoli"""
     for i in range(len(board)):
         for j in range(len(board[i])):
             if board[i][j] == 0:
@@ -39,16 +42,14 @@ def draw(board):  # funkcja wypisująca planszę do konsoli
         print()
 
 
-# "funkcja prywatna" funkcji next_state
 def count_neighbours(field, x, y, lx, ly):
+    """ "funkcja prywatna" funkcji next_state"""
     counter = 0
-
     for dx, dy in DIRS:
         nx = (x + dx) % lx
         ny = (y + dy) % ly
         if field[ny][nx] == 1:
             counter += 1
-
     return counter
 
 
@@ -60,12 +61,10 @@ def clone_board(output_board, input_board):
 
 
 def next_state(result, prev):
-    # prev - lista list, poprzednia plansza
-    # result - następny stan modyfikacja "w miejscu"
-
+    """ prev - lista list, poprzednia plansza
+    result - następny stan modyfikacja "w miejscu" """
     ly = len(prev)
     lx = len(prev[0])
-
     for y in range(ly):
         for x in range(lx):
             neighbours = count_neighbours(prev, x, y, lx, ly)

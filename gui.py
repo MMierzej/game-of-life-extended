@@ -17,14 +17,14 @@ root.geometry(resolution)
 canvas = Canvas(root, width=1000, height=1000)
 canvas.place(x=0, y=30)
 
-# rysuje planszę
 def draw():
+"""rysuje planszę"""
     for x_1 in range(x):
         for y_1 in range(y):
             canvas.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1, fill='red')
 
-# rozpoczyna symulacje
 def start():
+"""rozpoczyna symulacje"""
     draw()
     button_start.place_forget()
     button_stop.place(x=0, y=length + 55)
