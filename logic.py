@@ -17,7 +17,6 @@ def repetition(board, board_list):
     for i in range(len(board)):
         for j in range(len(board[i])):
             string += str(board[i][j])
-
     if string in board_list:
         board_list.append(string)
         return True
@@ -38,7 +37,6 @@ def draw(board):
                 print('x', end="")
             elif board[i][j] == 3:
                 print('@', end="")
-
         print()
 
 
@@ -76,15 +74,14 @@ def next_state(result, prev):
                 result[y][x] = 0
 
 
-def modify(plansza, x, y):
-    if plansza[y][x] == 1:
-        plansza[y][x] = 0
-    elif plansza[y][x] == 0:
-        plansza[y][x] = 1
+def modify(board, x, y):
+    if board[y][x] == 1:
+        board[y][x] = 0
+    elif board[y][x] == 0:
+        board[y][x] = 1
 
 
 if __name__ == "__main__":
-
     txt = """
     0000000000000000000000
     0000000000000000000000
@@ -98,7 +95,6 @@ if __name__ == "__main__":
     0001000000000000000000
     0000000000000000000000
     """
-
     height = 15
     width = 10
     board = generate(height, width)
@@ -119,7 +115,6 @@ if __name__ == "__main__":
                 draw(board)
                 print("\n*****************************\n")
                 time.sleep(0.2)
-
         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
         next_state(board, prev)  # ta funkcja generuje następny stan planszy (do zmiennej board)
         counter += 1
