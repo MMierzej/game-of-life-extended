@@ -4,8 +4,6 @@
 
 ## Logika
 
-* [ Andrzej ] generowanie losowej planszy, ale z określonym prawdopodobieństwem pojawienia się danego gatunku komórki
-
 * [ Wojtek ] testy oprogramowania (pytest)(??)
 
 ## GUI
@@ -59,3 +57,5 @@
 * [ 29.12. ] możliwość zakończenia symulacji, jeśli plansza się zapętli
 
 * [ 29.12. ] jak już będzie więcej rodzajów komórek, to do poprawy ewaluacja sąsiadów
+
+* [ 29.12. ] generowanie losowej planszy, ale z określonym prawdopodobieństwem pojawienia się danego gatunku komórki
