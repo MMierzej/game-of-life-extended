@@ -8,17 +8,32 @@ DIRS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
 
 def generate(height, width):  
     """generuje losową planszę z komorkami"""
-    board = [[[random.randint(0, 3), 0] for i in range(width)] for j in range(height)]
-
-    for row in board:
-        for cell in row:
-            if cell[0] == 1:
-                cell[1] = 3
-            elif cell[0] == 2:
-                cell[1] = 7
-            elif cell[0] == 3:
-                cell[1] = 10
     
+    # board[wiersz][kolumna][0] - gatunek
+    # board[wiersz][kolumna][1] - punkty życia
+    board = [[[0, 0] for i in range(width)] for j in range(height)]
+
+    for i in range(height):
+        for j in range(width):
+            possibility = random.uniform(0.0, 1.0)
+
+            if possibility < 0.4:
+                # puste pole
+                board[i][j][0] = 0
+                board[i][j][1] = 0
+            elif 0.4 <= possibility < 0.7:
+                # gatunek 1
+                board[i][j][0] = 1
+                board[i][j][1] = 3
+            elif 0.7 <= possibility < 0.9:
+                # gatunek 2
+                board[i][j][0] = 2
+                board[i][j][1] = 7
+            else:
+                # gatunek 3
+                board[i][j][0] = 3
+                board[i][j][1] = 9
+        
     return board
 
 def repetition(board, board_list):  
@@ -35,18 +50,32 @@ def repetition(board, board_list):
         board_list.append(string)
         return False
 
+# def draw(board):  
+#     """funkcja wypisująca planszę do konsoli"""
+#     for i in range(len(board)):
+#         for j in range(len(board[i])):
+#             if board[i][j][0] == 0:
+#                 print(' ', end="")
+#             elif board[i][j][0] == 1:
+#                 print('o', end="")
+#             elif board[i][j][0] == 2:
+#                 print('x', end="")
+#             elif board[i][j][0] == 3:
+#                 print('@', end="")
+#         print()
+
 def draw(board):  
-    """funkcja wypisująca planszę do konsoli"""
+    """funkcja wypisująca planszę do konsoli do testowania"""
     for i in range(len(board)):
         for j in range(len(board[i])):
             if board[i][j][0] == 0:
-                print(' ', end="")
+                print('  ', end=" ")
             elif board[i][j][0] == 1:
-                print('o', end="")
+                print(f'o{board[i][j][1]}', end=" ")
             elif board[i][j][0] == 2:
-                print('x', end="")
+                print(f'x{board[i][j][1]}', end=" ")
             elif board[i][j][0] == 3:
-                print('@', end="")
+                print(f'@{board[i][j][1]}', end=" ")
         print()
 
 
@@ -69,35 +98,46 @@ def clone_board(output_board, input_board):
 def next_state(result, prev, counter):
     """ prev - lista list, poprzednia plansza
     result - następny stan modyfikacja "w miejscu" """
+
     ly = len(prev)
     lx = len(prev[0])
+
     for y in range(ly):
         for x in range(lx):
             cell_type = prev[y][x][0]
             nb_d = count_neighbours(prev, x, y, lx, ly)
+
             if cell_type == 0:
-                if nb_d[1] >= 3 and nb_d[3] < 1:
+                if nb_d[1] >= 5 and nb_d[3] < 3:
                     result[y][x][0] = 1
                     result[y][x][1] = 3
-                elif nb_d[1] < 3 and nb_d[2] >= 2 and counter % 3 == 0:
+
+                elif nb_d[1] < 5 and nb_d[2] >= 4 and counter % 3 == 2:
                     result[y][x][0] = 2
                     result[y][x][1] = 7 
-                elif nb_d[2] < 2 and nb_d[3] >= 1 and counter % 6 == 0:
+
+                elif nb_d[2] < 4 and nb_d[3] >= 3 and counter % 6 == 5:
                     result[y][x][0] = 3
                     result[y][x][1] = 10 
+
             elif cell_type == 1:
                 if nb_d[2] > 0:
                     result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 3 else 3
+                    
                 if nb_d[3] > 0:
                     result[y][x][1] -= 1
+
             elif cell_type == 2:
                 if nb_d[3] > 0:
                     result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 7 else 7
+
                 if nb_d[1] > 0:
                     result[y][x][1] -= 1
+
             elif cell_type == 3:
                 if nb_d[1] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 10 else 10
+                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 9 else 9
+                    
                 if nb_d[2] > 0:
                     result[y][x][1] -= 1
             
@@ -133,9 +173,9 @@ if __name__ == "__main__":
     # board = [ [ int(c) for c in wiersz ] for wiersz in txt.split() ]
     prev = cp.deepcopy(board)
     counter = 0
-    interval = 5
+    interval = 1
     board_list = []
-    while counter < 150:
+    while counter < 10:
         if repetition(board, board_list) == True:
             draw(board)
             print("\n*****************************\n")
@@ -146,7 +186,7 @@ if __name__ == "__main__":
             if counter % interval == 0:
                 draw(board)
                 print("\n*****************************\n")
-                time.sleep(0.2)
+                time.sleep(1)
         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
         next_state(board, prev, counter)   # ta funkcja generuje następny stan planszy (do zmiennej board)
         counter += 1
