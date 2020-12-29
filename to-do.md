@@ -1,20 +1,12 @@
 # Tasks (zatwierdzone i do zrobienia)
 
-## Następne spotkanie: 26.12.
+## Następne spotkanie: t.b.d.
 
 ## Logika
 
-* [Andrzej] generowanie losowej planszy, ale z określonym prawdopodobieństwem pojawienia się danego gatunku komórki
+* [ Andrzej ] generowanie losowej planszy, ale z określonym prawdopodobieństwem pojawienia się danego gatunku komórki
 
-* [Mierzej] nowa logika 
-
-* [Wojtek] testy oprogramowania (pytest)???
-
-* [Andrzej] ujednolicenie komentarzy i nazewnictwa (jeden styl i jeden język)(commity po polsku, kod po angielsku, komentarze po polsku, małymi literami, komentarze na temat funkci bezpośrednio nad definicją funkcji, estetyczne formatowanie)
-
-* [Andrzej] możliwość zakończenia symulacji, jeśli plansza się zapętli
-
-* [Mierzej] jak już będzie więcej rodzajów komórek, to do poprawy ewaluacja sąsiadów
+* [ Wojtek ] testy oprogramowania (pytest)(??)
 
 ## GUI
 
@@ -59,3 +51,11 @@
 * [18.12. Michał] początek GUI (tkinter): przy odpaleniu programu wyskakuje puste okno (z przyciskami ewentualnie) < gui.py
 
 * [piątek 18.12. @all] przygotowanie propozycji rodzajów żywych komórek i interakcji (3 rodzaje i interakcje: 1 - 2, 1 - 3, 2 - 3)
+
+* [28.12, Wojtek] ujednolicenie komentarzy i nazewnictwa (jeden styl i jeden język)(commity po polsku, kod po angielsku, komentarze po polsku, małymi literami, komentarze na temat funkci bezpośrednio nad definicją funkcji, estetyczne formatowanie)
+
+* [ 29.12. ] nowa logika 
+
+* [ 29.12. ] możliwość zakończenia symulacji, jeśli plansza się zapętli
+
+* [ 29.12. ] jak już będzie więcej rodzajów komórek, to do poprawy ewaluacja sąsiadów
