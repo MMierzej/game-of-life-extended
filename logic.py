@@ -4,35 +4,46 @@ import time
 from collections import defaultdict as dd
 
 
+""" stałe """
+HEIGHT = 10
+WIDTH = 10
 DIRS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
+LIFE_1 = 2
+LIFE_2 = 4
+LIFE_3 = 6
+NB_1 = 4
+NB_2 = 3
+NB_3 = 3
+SUB_IT = 6
+RAND_IT = 4
 
-def generate(height, width):  
+def generate():  
     """generuje losową planszę z komorkami"""
     
     # board[wiersz][kolumna][0] - gatunek
     # board[wiersz][kolumna][1] - punkty życia
-    board = [[[0, 0] for i in range(width)] for j in range(height)]
+    board = [[[0, 0] for i in range(WIDTH)] for j in range(HEIGHT)]
 
-    for i in range(height):
-        for j in range(width):
+    for i in range(HEIGHT):
+        for j in range(WIDTH):
             possibility = random.uniform(0.0, 1.0)
 
-            if possibility < 0.4:
+            if possibility < 0.7:
                 # puste pole
                 board[i][j][0] = 0
                 board[i][j][1] = 0
-            elif 0.4 <= possibility < 0.7:
+            elif 0.7 <= possibility < 0.8:
                 # gatunek 1
                 board[i][j][0] = 1
-                board[i][j][1] = 3
-            elif 0.7 <= possibility < 0.9:
+                board[i][j][1] = LIFE_1
+            elif 0.8 <= possibility < 0.9:
                 # gatunek 2
                 board[i][j][0] = 2
-                board[i][j][1] = 7
+                board[i][j][1] = LIFE_2
             else:
                 # gatunek 3
                 board[i][j][0] = 3
-                board[i][j][1] = 9
+                board[i][j][1] = LIFE_3
         
     return board
 
@@ -110,43 +121,61 @@ def next_state(result, prev, counter):
             nb_d = count_neighbours(prev, x, y, lx, ly)
 
             if cell_type == 0:
-                if nb_d[1] >= 5 and nb_d[3] < 3:
+                if nb_d[1] >= NB_1 and nb_d[3] < NB_3:
                     result[y][x][0] = 1
-                    result[y][x][1] = 3
+                    result[y][x][1] = LIFE_1
 
-                elif nb_d[1] < 5 and nb_d[2] >= 4 and counter % 3 == 2:
+                elif nb_d[1] < NB_1 and nb_d[2] >= NB_2 and counter % 3 == 2:
                     result[y][x][0] = 2
-                    result[y][x][1] = 7 
+                    result[y][x][1] = LIFE_2
 
-                elif nb_d[2] < 4 and nb_d[3] >= 3 and counter % 6 == 5:
+                elif nb_d[2] < NB_2 and nb_d[3] >= NB_3 and counter % 6 == 5:
                     result[y][x][0] = 3
-                    result[y][x][1] = 10 
+                    result[y][x][1] = LIFE_3
 
             elif cell_type == 1:
                 if nb_d[3] > 0:
                     result[y][x][1] -= 1
                 
                 if nb_d[2] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 3 else 3
+                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < LIFE_1 else LIFE_1
 
             elif cell_type == 2:
                 if nb_d[1] > 0:
                     result[y][x][1] -= 1
 
                 if nb_d[3] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 7 else 7
+                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < LIFE_2 else LIFE_2
 
             elif cell_type == 3:
                 if nb_d[2] > 0:
                     result[y][x][1] -= 1
 
                 if nb_d[1] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 9 else 9
+                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < LIFE_3 else LIFE_3
+
+            if counter % SUB_IT == SUB_IT - 1:
+                result[y][x][1] -= 1
 
             # eliminacja zdechłych
             if result[y][x][1] <= 0:
                 result[y][x][0] = 0
                 result[y][x][1] = 0
+
+    # generowanie mutacji losowej komórki podczas gry
+    if counter % RAND_IT == RAND_IT - 1:
+        rx = random.randint(0, WIDTH - 1)
+        ry = random.randint(0, HEIGHT - 1)
+        t = random.randint(0, 3)
+        result[ry][rx][0] = t
+        if t == 0:
+            result[ry][rx][1] = 0
+        elif t == 1:
+            result[ry][rx][1] = LIFE_1
+        elif t == 2:
+            result[ry][rx][1] = LIFE_2
+        else:
+            result[ry][rx][1] = LIFE_3
 
 def modify(board, x, y):
     if board[y][x] == 1:
@@ -156,28 +185,15 @@ def modify(board, x, y):
 
 
 if __name__ == "__main__":
-    txt = """
-    0000000000000000000000
-    0000000000000000000000
-    0000000000000011100000
-    0000000000000000000000
-    0000000000000000000000
-    0000000000000000000000
-    0000000000000000000000
-    0011100000000000000000
-    0000100000000000000000
-    0001000000000000000000
-    0000000000000000000000
-    """
-    height = 10
-    width = 10
-    board = generate(height, width)
-    # board = [ [ int(c) for c in wiersz ] for wiersz in txt.split() ]
+    # board = generate()
+    board = [[[0, 0], [0, 0], [0, 0], [3, 7], [0, 0], [0, 0], [0, 0], [2, 5], [0, 0], [0, 0]], [[2, 5], [0, 0], [0, 0], [2, 5], [2, 5], [3, 7], [1, 2], [0, 0], [1, 2], [3, 7]], [[2, 5], [0, 0], [0, 0], [0, 0], [3, 7], [0, 0], [1, 2], [2, 5], [0, 0], [0, 0]], [[3, 7], [0, 0], [1, 2], [0, 0], [3, 7], [0, 0], [0, 0], [2, 5], [0, 0], [0, 0]], [[1, 2], [3, 7], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [3, 7], [0, 0], [0, 0], [2, 5]], [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [2, 5], [3, 7], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [1, 2], [1, 2], [0, 0], [0, 0], [0, 0], [2, 5], [0, 0]], [[2, 5], [2, 5], [0, 0], [0, 0], [1, 2], [0, 0], [0, 0], [2, 5], [1, 2], [0, 0]], [[0, 0], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [0, 0], [0, 0]]]
     prev = cp.deepcopy(board)
     counter = 0
     interval = 1
     board_list = []
-    while counter < 2:
+    
+    print("\n*****************************\n")
+    while counter < 200:
         if repetition(board, board_list) == True:
             draw(board)
             print("\n*****************************\n")
@@ -188,7 +204,7 @@ if __name__ == "__main__":
             if counter % interval == 0:
                 draw(board)
                 print("\n*****************************\n")
-                time.sleep(2)
+                time.sleep(0.5)
         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
         next_state(board, prev, counter)   # ta funkcja generuje następny stan planszy (do zmiennej board)
         counter += 1
