@@ -123,35 +123,26 @@ def next_state(result, prev, counter):
                     result[y][x][1] = 10 
 
             elif cell_type == 1:
-                if nb_d[2] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1
-                    
                 if nb_d[3] > 0:
                     result[y][x][1] -= 1
                 
-                if result[y][x][1] > 3:
-                    result[y][x][1] = 3
+                if nb_d[2] > 0:
+                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 3 else 3
 
             elif cell_type == 2:
-                if nb_d[3] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1
-
                 if nb_d[1] > 0:
                     result[y][x][1] -= 1
 
-                if result[y][x][1] > 7:
-                    result[y][x][1] = 7
+                if nb_d[3] > 0:
+                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 7 else 7
 
             elif cell_type == 3:
-                if nb_d[1] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1
-                    
                 if nb_d[2] > 0:
                     result[y][x][1] -= 1
 
-                if result[y][x][1] > 9:
-                    result[y][x][1] = 9
-            
+                if nb_d[1] > 0:
+                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 9 else 9
+
             # eliminacja zdechłych
             if result[y][x][1] <= 0:
                 result[y][x][0] = 0
@@ -178,7 +169,7 @@ if __name__ == "__main__":
     0001000000000000000000
     0000000000000000000000
     """
-    height = 15
+    height = 10
     width = 10
     board = generate(height, width)
     # board = [ [ int(c) for c in wiersz ] for wiersz in txt.split() ]
