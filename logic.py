@@ -50,19 +50,21 @@ def repetition(board, board_list):
         board_list.append(string)
         return False
 
-# def draw(board):  
-#     """funkcja wypisująca planszę do konsoli"""
-#     for i in range(len(board)):
-#         for j in range(len(board[i])):
-#             if board[i][j][0] == 0:
-#                 print(' ', end="")
-#             elif board[i][j][0] == 1:
-#                 print('o', end="")
-#             elif board[i][j][0] == 2:
-#                 print('x', end="")
-#             elif board[i][j][0] == 3:
-#                 print('@', end="")
-#         print()
+"""
+def draw(board):  
+    # funkcja wypisująca planszę do konsoli
+    for i in range(len(board)):
+        for j in range(len(board[i])):
+            if board[i][j][0] == 0:
+                print(' ', end="")
+            elif board[i][j][0] == 1:
+                print('o', end="")
+            elif board[i][j][0] == 2:
+                print('x', end="")
+            elif board[i][j][0] == 3:
+                print('@', end="")
+        print()
+"""
 
 def draw(board):  
     """funkcja wypisująca planszę do konsoli do testowania"""
@@ -122,24 +124,33 @@ def next_state(result, prev, counter):
 
             elif cell_type == 1:
                 if nb_d[2] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 3 else 3
+                    result[y][x][1] = prev[y][x][1] + 1
                     
                 if nb_d[3] > 0:
                     result[y][x][1] -= 1
+                
+                if result[y][x][1] > 3:
+                    result[y][x][1] = 3
 
             elif cell_type == 2:
                 if nb_d[3] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 7 else 7
+                    result[y][x][1] = prev[y][x][1] + 1
 
                 if nb_d[1] > 0:
                     result[y][x][1] -= 1
+
+                if result[y][x][1] > 7:
+                    result[y][x][1] = 7
 
             elif cell_type == 3:
                 if nb_d[1] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < 9 else 9
+                    result[y][x][1] = prev[y][x][1] + 1
                     
                 if nb_d[2] > 0:
                     result[y][x][1] -= 1
+
+                if result[y][x][1] > 9:
+                    result[y][x][1] = 9
             
             # eliminacja zdechłych
             if result[y][x][1] <= 0:
@@ -175,7 +186,7 @@ if __name__ == "__main__":
     counter = 0
     interval = 1
     board_list = []
-    while counter < 10:
+    while counter < 2:
         if repetition(board, board_list) == True:
             draw(board)
             print("\n*****************************\n")
@@ -186,7 +197,7 @@ if __name__ == "__main__":
             if counter % interval == 0:
                 draw(board)
                 print("\n*****************************\n")
-                time.sleep(1)
+                time.sleep(2)
         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
         next_state(board, prev, counter)   # ta funkcja generuje następny stan planszy (do zmiennej board)
         counter += 1
