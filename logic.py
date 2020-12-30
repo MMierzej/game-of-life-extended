@@ -14,10 +14,12 @@ LIFE_3 = 6
 NB_1 = 4
 NB_2 = 3
 NB_3 = 3
-SUB_IT = 6
+SUB_IT = 4
 RAND_IT = 4
+REFRESH_IT = 1
+REPS = 4
 
-def generate():  
+def generate():
     """generuje losową planszę z komorkami"""
     
     # board[wiersz][kolumna][0] - gatunek
@@ -47,19 +49,17 @@ def generate():
         
     return board
 
-def repetition(board, board_list):  
-    """sprawdza czy plansza się zapętla"""
-    string = ""
-    for i in range(len(board)):
-        for j in range(len(board[i])):
-            string += str(board[i][j][0])
-            string += str(board[i][j][1])
-    if string in board_list:
-        board_list.append(string)
+
+def repetition(board_d, board):  
+    """ sprawdza czy plansza się zapętla """
+    string = str(board)
+    board_d[string] += 1
+
+    if board_d[string] > REPS:
         return True
-    else:
-        board_list.append(string)
-        return False
+
+    return False
+
 
 """
 def draw(board):  
@@ -77,8 +77,11 @@ def draw(board):
         print()
 """
 
+
 def draw(board):  
     """funkcja wypisująca planszę do konsoli do testowania"""
+    print("\n*****************************\n")
+
     for i in range(len(board)):
         for j in range(len(board[i])):
             if board[i][j][0] == 0:
@@ -90,35 +93,41 @@ def draw(board):
             elif board[i][j][0] == 3:
                 print(f'@{board[i][j][1]}', end=" ")
         print()
+        
+    print("\n*****************************\n")
 
 
-def count_neighbours(field, x, y, lx, ly):
-    """ "funkcja prywatna" funkcji next_state"""
-    neighbours_d = dd(lambda : 0)
+def count_neighbours(board, neighbours_d, x, y):
+    """ "funkcja prywatna" funkcji next_state """
+    for i in range(4):
+        neighbours_d[i] = 0
+    
     for dx, dy in DIRS:
-        nx = (x + dx) % lx
-        ny = (y + dy) % ly
-        neighbours_d[field[ny][nx][0]] += 1
+        nx = (x + dx) % WIDTH
+        ny = (y + dy) % HEIGHT
+        neighbours_d[board[ny][nx][0]] += 1
+
     return neighbours_d
 
+
 def clone_board(output_board, input_board):
-    """ copies the content of prev to board """
-    for i in range(len(prev)):
-        for j in range(len(prev[0])):
+    """ kopiowanie zawartości input do output """ 
+    for i in range(HEIGHT):
+        for j in range(WIDTH):
             output_board[i][j][0] = input_board[i][j][0]
             output_board[i][j][1] = input_board[i][j][1]
 
-def next_state(result, prev, counter):
-    """ prev - lista list, poprzednia plansza
-    result - następny stan modyfikacja "w miejscu" """
 
-    ly = len(prev)
-    lx = len(prev[0])
+def next_state(result, prev, neighbours_d, counter):
+    """
+    prev - lista list, poprzednia plansza
+    result - następny stan modyfikacja "w miejscu"
+    """
 
-    for y in range(ly):
-        for x in range(lx):
+    for y in range(HEIGHT):
+        for x in range(WIDTH):
             cell_type = prev[y][x][0]
-            nb_d = count_neighbours(prev, x, y, lx, ly)
+            nb_d = count_neighbours(prev, neighbours_d, x, y)
 
             if cell_type == 0:
                 if nb_d[1] >= NB_1 and nb_d[3] < NB_3:
@@ -162,12 +171,14 @@ def next_state(result, prev, counter):
                 result[y][x][0] = 0
                 result[y][x][1] = 0
 
-    # generowanie mutacji losowej komórki podczas gry
+    """ generowanie mutacji losowej komórki """
     if counter % RAND_IT == RAND_IT - 1:
         rx = random.randint(0, WIDTH - 1)
         ry = random.randint(0, HEIGHT - 1)
         t = random.randint(0, 3)
+
         result[ry][rx][0] = t
+
         if t == 0:
             result[ry][rx][1] = 0
         elif t == 1:
@@ -177,34 +188,23 @@ def next_state(result, prev, counter):
         else:
             result[ry][rx][1] = LIFE_3
 
-def modify(board, x, y):
-    if board[y][x] == 1:
-        board[y][x] = 0
-    elif board[y][x] == 0:
-        board[y][x] = 1
-
 
 if __name__ == "__main__":
     # board = generate()
-    board = [[[0, 0], [0, 0], [0, 0], [3, 7], [0, 0], [0, 0], [0, 0], [2, 5], [0, 0], [0, 0]], [[2, 5], [0, 0], [0, 0], [2, 5], [2, 5], [3, 7], [1, 2], [0, 0], [1, 2], [3, 7]], [[2, 5], [0, 0], [0, 0], [0, 0], [3, 7], [0, 0], [1, 2], [2, 5], [0, 0], [0, 0]], [[3, 7], [0, 0], [1, 2], [0, 0], [3, 7], [0, 0], [0, 0], [2, 5], [0, 0], [0, 0]], [[1, 2], [3, 7], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [3, 7], [0, 0], [0, 0], [2, 5]], [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [2, 5], [3, 7], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [1, 2], [1, 2], [0, 0], [0, 0], [0, 0], [2, 5], [0, 0]], [[2, 5], [2, 5], [0, 0], [0, 0], [1, 2], [0, 0], [0, 0], [2, 5], [1, 2], [0, 0]], [[0, 0], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [0, 0], [0, 0]]]
+    board = [[[0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [0, 0], [0, 0], [2, 4], [0, 0], [0, 0]], [[2, 4], [0, 0], [0, 0], [2, 4], [2, 4], [3, 6], [1, 2], [0, 0], [1, 2], [3, 6]], [[2, 4], [0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [1, 2], [2, 4], [0, 0], [0, 0]], [[3, 6], [0, 0], [1, 2], [0, 0], [3, 6], [0, 0], [0, 0], [2, 4], [0, 0], [0, 0]], [[1, 2], [3, 6], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [0, 0], [2, 4]], [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [2, 4], [3, 6], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [1, 2], [1, 2], [0, 0], [0, 0], [0, 0], [2, 4], [0, 0]], [[2, 4], [2, 4], [0, 0], [0, 0], [1, 2], [0, 0], [0, 0], [2, 4], [1, 2], [0, 0]], [[0, 0], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [0, 0], [0, 0]]]
     prev = cp.deepcopy(board)
+    board_d = dd(lambda : 0)
+    neighbours_d = dd(lambda : 0)
     counter = 0
-    interval = 1
-    board_list = []
     
-    print("\n*****************************\n")
-    while counter < 200:
-        if repetition(board, board_list) == True:
+    while counter < 1000 and not repetition(board_d, board):
+        if counter % REFRESH_IT == 0:
             draw(board)
-            print("\n*****************************\n")
-            print("Symulacja się zapętliła.")
-            break
-        else:
-            repetition(board, board_list)
-            if counter % interval == 0:
-                draw(board)
-                print("\n*****************************\n")
-                time.sleep(0.5)
-        clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
-        next_state(board, prev, counter)   # ta funkcja generuje następny stan planszy (do zmiennej board)
+            time.sleep(0.2)
+
+        clone_board(prev, board)                         # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
+        next_state(board, prev, neighbours_d, counter)   # ta funkcja generuje następny stan planszy (do zmiennej board)
         counter += 1
+
+    draw(board)
+    print("Symulacja się zapętliła." if counter < 1000 else "Koniec.")
