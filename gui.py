@@ -18,13 +18,13 @@ canvas = Canvas(root, width=1000, height=1000)
 canvas.place(x=0, y=30)
 
 def draw():
-"""rysuje planszę"""
+    """rysuje planszę"""
     for x_1 in range(x):
         for y_1 in range(y):
             canvas.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1, fill='red')
 
 def start():
-"""rozpoczyna symulacje"""
+    """rozpoczyna symulacje"""
     draw()
     button_start.place_forget()
     button_stop.place(x=0, y=length + 55)
