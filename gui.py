@@ -1,11 +1,14 @@
 from tkinter import *
-from logic import board
+from logic import *
 
 # zmienne wielkości okna
 x = 20
 y = 20
 length = y * 30
 width = x * 30
+
+# Tablica testowa
+board = generate(x, y)
 
 # ustawienia root
 root = Tk()
@@ -32,21 +35,78 @@ def clicked_1(event):
     y_click = event.y // 30
     if board[x_click][y_click] < 3:
         board[x_click][y_click] += 1
-    elif board[x_click][y_click] == 3:
-        return
+        if board[x_click][y_click] == 3:
+            board_gui.create_rectangle(30 * x_click, 30 * y_click, 20 + 30 * x_click, 20 + 30 * y_click, fill='#000000',
+                                       tags=f'{x_click},{y_click}')
+        elif board[x_click][y_click] == 2:
+            board_gui.create_rectangle(30 * x_click, 30 * y_click, 20 + 30 * x_click, 20 + 30 * y_click, fill='#525151',
+                                       tags=f'{x_click},{y_click}')
+        elif board[x_click][y_click] == 1:
+            board_gui.create_rectangle(30 * x_click, 30 * y_click, 20 + 30 * x_click, 20 + 30 * y_click, fill='#949494',
+                                       tags=f'{x_click},{y_click}')
+    print(board[x_click][y_click])
+
+
+def clicked_2(event):
+    x_click = event.x // 30
+    y_click = event.y // 30
+    if board[x_click][y_click] != 0:
+        board[x_click][y_click] -= 1
+        if board[x_click][y_click] == 0:
+            board_gui.create_rectangle(30 * x_click, 30 * y_click, 20 + 30 * x_click, 20 + 30 * y_click, fill='white',
+                                       tags=f'{x_click},{y_click}')
+        elif board[x_click][y_click] == 1:
+            board_gui.create_rectangle(30 * x_click, 30 * y_click, 20 + 30 * x_click, 20 + 30 * y_click, fill='#949494',
+                                       tags=f'{x_click},{y_click}')
+        elif board[x_click][y_click] == 2:
+            board_gui.create_rectangle(30 * x_click, 30 * y_click, 20 + 30 * x_click, 20 + 30 * y_click, fill='#525151',
+                                       tags=f'{x_click},{y_click}')
+    print(board[x_click][y_click])
 
 
 def draw():
     """rysuje planszę"""
     for x_1 in range(x):
         for y_1 in range(y):
-            board_gui.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1, fill='white', tags=f'{x_1},{y_1}')
+            if board[x_1][y_1] == 3:
+                board_gui.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1,
+                                           fill='#000000',
+                                           tags=f'{x_1},{y_1}')
+            elif board[x_1][y_1] == 2:
+                board_gui.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1,
+                                           fill='#525151',
+                                           tags=f'{x_1},{y_1}')
+            elif board[x_1][y_1] == 1:
+                board_gui.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1,
+                                           fill='#949494',
+                                           tags=f'{x_1},{y_1}')
+            else:
+                board_gui.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1,
+                                           fill='white',
+                                           tags=f'{x_1},{y_1}')
             board_gui.tag_bind(f'{x_1},{y_1}', '<Button-1>', clicked_1)
+            board_gui.tag_bind(f'{x_1},{y_1}', '<Button-3>', clicked_2)
+
+
+def clear():
+    for x_1 in range(x):
+        for y_1 in range(y):
+            board[x_1][y_1] = 0
+            board_gui.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1,
+                                       fill='white',
+                                       tags=f'{x_1},{y_1}')
+            board_gui.tag_bind(f'{x_1},{y_1}', '<Button-1>', clicked_1)
+            board_gui.tag_bind(f'{x_1},{y_1}', '<Button-3>', clicked_2)
+
+
+def new_board():
+    global board
+    board = generate(x, y)
+    draw()
 
 
 def start():
     """rozpoczyna symulacje"""
-    draw()
     button_start.place_forget()
     button_stop.place(x=7, y=123)
 
@@ -58,15 +118,15 @@ def stop():
 
 def next(a):
     if a == 1:
-        draw()
+        return
     # else:
     #     for i in range(a):
     #         rysuj()
 
 
 # utworzone przyciski
-button_reset = Button(root, text="Przywróć do stanu początkowego")
-button_clear = Button(root, text="Wyczyść")
+button_reset = Button(root, text="Generuj nową planszę", command=new_board)
+button_clear = Button(root, text="Wyczyść", command=clear)
 
 button_next = Button(root, text="Jeden ruch", command=lambda: next(1))
 button_next_5 = Button(root, text="5 ruchów", command=lambda: next(5))

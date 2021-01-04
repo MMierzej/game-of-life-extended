@@ -8,9 +8,11 @@
 
 ## GUI
 
-* [ ] rozwój GUI
+* [ ] Blokada przycisków podczas działania
 
-* [ ] łączenie GUI z backendem <- do nowego pliku main.py
+* [ ] Zmiana długości kroku (1,5,10)
+
+* [ ] Poprawa wizualna (rozmieszczenie przycisków, przyjemniejsze kolory itd.)
 
 ### Propozycje (dalsze kroki itd.)
 
