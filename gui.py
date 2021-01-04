@@ -1,4 +1,5 @@
 from tkinter import *
+from logic import board
 
 # zmienne wielkości okna
 x = 20
@@ -10,31 +11,49 @@ width = x * 30
 root = Tk()
 root.title("Gra w życie")
 root.iconbitmap("icon.ico")
-resolution = str(width) + 'x' + str(length + 86)
+resolution = str(width + 275) + 'x' + str(length + 20)
 root.geometry(resolution)
 
 # ustawienia canvas
-canvas = Canvas(root, width=1000, height=1000)
-canvas.place(x=0, y=30)
+frame_board = Canvas(root, width=1000, height=1000)
+frame_board.place(x=260, y=0)
+frame_board.create_rectangle(5, 5, length + 10, width + 10)
+
+board_gui = Canvas(root, width=width - 10, height=length - 10)
+board_gui.place(x=270, y=10)
+
+frame = Canvas(root, width=255, height=505)
+frame.place(x=0, y=0)
+frame.create_rectangle(5, 5, 255, 505)
+
+
+def clicked_1(event):
+    x_click = event.x // 30
+    y_click = event.y // 30
+    if board[x_click][y_click] < 3:
+        board[x_click][y_click] += 1
+    elif board[x_click][y_click] == 3:
+        return
 
 
 def draw():
     """rysuje planszę"""
     for x_1 in range(x):
         for y_1 in range(y):
-            canvas.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1, fill='red')
+            board_gui.create_rectangle(30 * x_1, 30 * y_1, 20 + 30 * x_1, 20 + 30 * y_1, fill='white', tags=f'{x_1},{y_1}')
+            board_gui.tag_bind(f'{x_1},{y_1}', '<Button-1>', clicked_1)
 
 
 def start():
     """rozpoczyna symulacje"""
     draw()
     button_start.place_forget()
-    button_stop.place(x=0, y=length + 55)
+    button_stop.place(x=7, y=123)
 
 
 def stop():
     button_stop.place_forget()
-    button_start.place(x=0, y=length + 55)
+    button_start.place(x=7, y=123)
 
 
 def next(a):
@@ -57,12 +76,12 @@ button_start = Button(root, text="Rozpocznij", command=start)
 button_stop = Button(root, text="Wstrzymaj", command=stop)
 
 # wypisanie przycisków do okna
-button_reset.place(x=0, y=0)
-button_clear.place(x=189, y=0)
+button_reset.place(x=7, y=7)
+button_clear.place(x=197, y=7)
 
-button_next.place(x=0, y=length + 25)
-button_next_5.place(x=69, y=length + 25)
-button_next_10.place(x=130, y=length + 25)
-button_start.place(x=0, y=length + 55)
+button_next.place(x=7, y=65)
+button_next_5.place(x=76, y=65)
+button_next_10.place(x=137, y=65)
+button_start.place(x=7, y=123)
 
 root.mainloop()
