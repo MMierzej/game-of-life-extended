@@ -9,14 +9,14 @@
 ## 1
 * pojawia się co 1 iterację
 * ma 3 życia
-* potrzebuje 3 sąsiadów, żeby się pojawić // zamiana na 5
+* potrzebuje 3 sąsiadów, żeby się pojawić
 
 ## 2
 * pojawia się co 3 iteracje
 * ma 7 żyć
-* potrzebuje 2 sąsiadów, żeby się pojawić // zamiana na 4
+* potrzebuje 2 sąsiadów, żeby się pojawić
 
 ## 3
 * pojawia się co 6 iteracji
 * ma 10 żyć
-* potrzebuje jednego sąsiada // zamiana na 3 
+* potrzebuje jednego sąsiada
