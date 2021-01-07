@@ -4,15 +4,15 @@
 
 ## Logika
 
-* [ Andrzej ] generowanie losowej planszy, ale z określonym prawdopodobieństwem pojawienia się danego gatunku komórki
-
 * [ Wojtek ] testy oprogramowania (pytest)(??)
 
 ## GUI
 
-* [ ] rozwój GUI
+* [ ] Blokada przycisków podczas działania
 
-* [ ] łączenie GUI z backendem <- do nowego pliku main.py
+* [ ] Zmiana długości kroku (1,5,10)
+
+* [ ] Poprawa wizualna (rozmieszczenie przycisków, przyjemniejsze kolory itd.)
 
 ### Propozycje (dalsze kroki itd.)
 
@@ -59,3 +59,5 @@
 * [ 29.12. ] możliwość zakończenia symulacji, jeśli plansza się zapętli
 
 * [ 29.12. ] jak już będzie więcej rodzajów komórek, to do poprawy ewaluacja sąsiadów
+
+* [ 29.12. ] generowanie losowej planszy, ale z określonym prawdopodobieństwem pojawienia się danego gatunku komórki
