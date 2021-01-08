@@ -3,6 +3,7 @@ import random
 import time
 from collections import defaultdict as dd
 
+
 """ stałe """
 HEIGHT = 10
 WIDTH = 10
@@ -19,26 +20,39 @@ REFRESH_IT = 1
 REPS = 4
 
 
-def generate():
+def set_cell(board, x, y, t):
+    board[y][x][0] = t
+    
+    if t == 0:
+        board[y][x][1] = 0
+    elif t == 1:
+        board[y][x][1] = LIFE_1
+    elif t == 2:
+        board[y][x][1] = LIFE_2
+    elif t == 3:
+        board[y][x][1] = LIFE_3
+
+
+def generate(height, width):
     """generuje losową planszę z komorkami"""
 
     # board[wiersz][kolumna][0] - gatunek
     # board[wiersz][kolumna][1] - punkty życia
-    board = [[[0, 0] for i in range(WIDTH)] for j in range(HEIGHT)]
+    board = [[[0, 0] for i in range(width)] for j in range(height)]
 
-    for i in range(HEIGHT):
-        for j in range(WIDTH):
-            possibility = random.uniform(0.0, 1.0)
+    for i in range(height):
+        for j in range(width):
+            p = random.uniform(0.0, 1.0)
 
-            if possibility < 0.7:
+            if p < 0.7:
                 # puste pole
                 board[i][j][0] = 0
                 board[i][j][1] = 0
-            elif 0.7 <= possibility < 0.8:
+            elif 0.7 <= p < 0.8:
                 # gatunek 1
                 board[i][j][0] = 1
                 board[i][j][1] = LIFE_1
-            elif 0.8 <= possibility < 0.9:
+            elif 0.8 <= p < 0.9:
                 # gatunek 2
                 board[i][j][0] = 2
                 board[i][j][1] = LIFE_2
@@ -207,7 +221,7 @@ def next_state(result, prev, neighbours_d, counter):
 
 
 if __name__ == "__main__":
-    # board = generate()
+    # board = generate(HEIGHT, WIDTH)
     board = [[[0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [0, 0], [0, 0], [2, 4], [0, 0], [0, 0]],
              [[2, 4], [0, 0], [0, 0], [2, 4], [2, 4], [3, 6], [1, 2], [0, 0], [1, 2], [3, 6]],
              [[2, 4], [0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [1, 2], [2, 4], [0, 0], [0, 0]],
