@@ -4,12 +4,10 @@ from logic import *
 import platform
 
 
-# print(platform.platform())
-
 LIFE = [2, 4, 6]
 NB = [4, 3, 3]
 SPAWN = [1, 3, 6]
-QUAKE = 1
+QUAKE = 5
 MUT = 0
 REP = 4
 TEMPO = 8
@@ -20,7 +18,7 @@ y = 10
 height = y * 30
 width = x * 30
 fwidth = width + 100 if width > 600 else 700
-fheight = height + 400
+fheight = height + 350
 
 counter = 0
 board = [[[0, 0] for i in range(x)] for j in range(y)]
@@ -32,7 +30,10 @@ run = True
 # ustawienia root
 root = Tk()
 root.title("Gra w życie")
-# root.iconbitmap("icon.ico")
+
+if "Linux" not in platform.platform():
+    root.iconbitmap("icon.ico")
+
 resolution = str(fwidth) + 'x' + str(fheight)
 root.minsize(400, 400)
 root.geometry(resolution)
@@ -50,9 +51,9 @@ frame = Canvas(root, width=fwidth - 10, height=40)
 frame.place(x=5, y=10)
 frame.create_rectangle(fwidth // 2 - 180, 5, fwidth // 2 + 177, 40)
 
-frame_controls = Canvas(root, width = fwidth - 10, height=400)
+frame_controls = Canvas(root, width = fwidth - 10, height=300)
 frame_controls.place(x=5, y=70 + height + 10)
-frame_controls.create_rectangle(5, 5, fwidth - 15, 310)
+frame_controls.create_rectangle(5, 5, fwidth - 15, 260)
 
 
 def clicked_left(event):
@@ -82,6 +83,7 @@ def clicked_right(event):
 
 def draw_board():
     """rysuje planszę"""
+    board_gui.delete("all")
 
     for y_1 in range(y):
         for x_1 in range(x):
