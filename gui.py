@@ -77,6 +77,8 @@ def clicked_right(event):
     x_click = event.x // 30
     y_click = event.y // 30
 
+    board[y_click][x_click][1] -= 1
+
     if board[y_click][x_click][1] <= 0:
         board[y_click][x_click][0] = 0
         board[y_click][x_click][1] = 0
