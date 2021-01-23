@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from tkinter import *
+from typing import runtime_checkable
 from logic import *
 import platform
 
@@ -24,7 +25,7 @@ counter = 0
 board = [[[0, 0] for i in range(x)] for j in range(y)]
 prev = cp.deepcopy(board)
 neighbours_d = dd(lambda : 0)
-run = True
+run = False
 
 # ustawienia root
 root = Tk()
@@ -107,10 +108,21 @@ def draw_board():
     
     board_gui.update()
 
+def is_empty(board):
+    for i in range(y):
+        for k in range(x):
+            if board[i][k][0] != 0:
+                return False
+    
+    return True
 
 def clear():
     global neighbours_d
     global counter
+    global run
+
+    if run:
+        start_stop()
 
     for x_1 in range(x):
         for y_1 in range(y):
@@ -140,6 +152,13 @@ def new_board():
 def start_stop():
     global run
     if button_start['text'] == 'Rozpocznij':
+        button_next['state'] = DISABLED
+        button_next_5['state'] = DISABLED
+        button_next_10['state'] = DISABLED
+
+        if is_empty(board):
+            new_board()
+
         button_start['text'] = 'Wstrzymaj'
         run = True
 
@@ -147,12 +166,18 @@ def start_stop():
             step(1)
     
     elif button_start['text'] == 'Wstrzymaj':
+        if not is_empty(board):
+            button_next['state'] = NORMAL
+            button_next_5['state'] = NORMAL
+            button_next_10['state'] = NORMAL
         button_start['text'] = 'Rozpocznij'
         run = False
 
 def step(a):
     global counter
     i = 0
+
+    button_generate['state'] = 'disable'
 
     while i < a:
         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
@@ -161,6 +186,8 @@ def step(a):
         draw_board()
         time.sleep(1 - (TEMPO - 1) / 10)
         i += 1
+    
+    button_generate['state'] = NORMAL
 
 def set_life(value, index):
     LIFE[index] = int(value)
@@ -193,9 +220,9 @@ button_generate = Button(frame, width=10, text="Generuj", command=new_board)
 button_clear = Button(frame, width=10, text="Wyczyść", command=clear)
 button_start = Button(frame, width=10, text="Rozpocznij", command=start_stop)
 
-button_next = Button(frame_controls, width=10, text="1 ruch", command=lambda: step(1))
-button_next_5 = Button(frame_controls, width=10, text="5 ruchów", command=lambda: step(5))
-button_next_10 = Button(frame_controls, width=10, text="10 ruchów", command=lambda: step(10))
+button_next = Button(frame_controls, width=10, text="1 ruch", command=lambda: step(1), state='disable')
+button_next_5 = Button(frame_controls, width=10, text="5 ruchów", command=lambda: step(5), state='disable')
+button_next_10 = Button(frame_controls, width=10, text="10 ruchów", command=lambda: step(10), state='disable')
 
 # wypisanie przycisków do okna
 button_generate.place(x=fwidth // 2 - 55, y=7)
