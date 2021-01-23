@@ -144,23 +144,38 @@ def new_board():
 
     draw_board()
 
-def start():
-    """rozpoczyna symulacje"""
-    button_start.place_forget()
-    button_stop.place(x=fwidth // 2 - 175, y=7)
-
+def start_stop():
     global run
-    run = True
+    if button_start['text'] == 'Rozpocznij':
+        button_start['text'] = 'Wstrzymaj'
+        run = True
 
-    while run:
-        step(1)
+        while run:
+            step(1)
+    
+    elif button_start['text'] == 'Wstrzymaj':
+        button_start['text'] = 'Rozpocznij'
+        run = False
 
-def stop():
-    global run
-    run = False
+# def start():
+#     """rozpoczyna symulacje"""
+#     # button_start.place_forget()
+#     # button_stop.place(x=fwidth // 2 - 175, y=7)
+#     button_start['text'] = "Rozpocznij"
 
-    button_stop.place_forget()
-    button_start.place(x=fwidth // 2 - 175, y=7)
+#     global run
+#     run = True
+
+#     while run:
+#         step(1)
+
+# def stop():
+#     global run
+#     run = False
+
+#     button_start['text'] = "Wstrzymaj"
+#     # button_stop.place_forget()
+#     # button_start.place(x=fwidth // 2 - 175, y=7)
 
 def step(a):
     global counter
@@ -203,8 +218,8 @@ def set_spawn(val, index):
 # utworzone przyciski
 button_generate = Button(frame, width=10, text="Generuj", command=new_board)
 button_clear = Button(frame, width=10, text="Wyczyść", command=clear)
-button_start = Button(frame, width=10, text="Rozpocznij", command=start)
-button_stop = Button(frame, width=10, text="Wstrzymaj", command=stop)
+# button_stop = Button(frame, width=10, text="Wstrzymaj", command=start)
+button_start = Button(frame, width=10, text="Rozpocznij", command=start_stop)
 
 button_next = Button(frame_controls, width=10, text="1 ruch", command=lambda: step(1))
 button_next_5 = Button(frame_controls, width=10, text="5 ruchów", command=lambda: step(5))
