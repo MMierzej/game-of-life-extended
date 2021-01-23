@@ -14,8 +14,8 @@ REP = 4
 TEMPO = 8
 
 # zmienne wielkości okna
-x = 10
-y = 10
+x = 12
+y = 12
 height = y * 30
 width = x * 30
 fwidth = width + 100 if width > 600 else 700
@@ -87,17 +87,17 @@ def draw_board():
 
     for y_1 in range(y):
         for x_1 in range(x):
-            if board[y_1][x_1][0] == 3:
+            if board[y_1][x_1][0] == 1:
                 board_gui.create_rectangle(30 * x_1 + 3, 30 * y_1 + 3, 20 + 30 * x_1 + 3, 20 + 30 * y_1 + 3,
-                                           fill='#ef7c27',
+                                           fill='#f1c40f',  # żółty
                                            tags=f'{y_1},{x_1}')
             elif board[y_1][x_1][0] == 2:
                 board_gui.create_rectangle(30 * x_1 + 3, 30 * y_1 + 3, 20 + 30 * x_1 + 3, 20 + 30 * y_1 + 3,
-                                           fill='#009C11',
+                                           fill='#cb4335',  # czerwony
                                            tags=f'{y_1},{x_1}')
-            elif board[y_1][x_1][0] == 1:
+            elif board[y_1][x_1][0] == 3:
                 board_gui.create_rectangle(30 * x_1 + 3, 30 * y_1 + 3, 20 + 30 * x_1 + 3, 20 + 30 * y_1 + 3,
-                                           fill='#6699ff',
+                                           fill='#2980b9',  # granatowy (?)
                                            tags=f'{y_1},{x_1}')
             else:
                 board_gui.create_rectangle(30 * x_1 + 3, 30 * y_1 + 3, 20 + 30 * x_1 + 3, 20 + 30 * y_1 + 3,
@@ -232,9 +232,7 @@ def set_spawn(val, index):
     SPAWN[index] = int(val)
 
 # utworzone przyciski
-# button_generate = Button(frame, width=10, text="Generuj", command=new_board)
 button_generate = Button(frame, width=10, text="Generuj", command=gen_board)
-# button_clear = Button(frame, width=10, text="Wyczyść", command=clear)
 button_clear = Button(frame, width=10, text="Wyczyść", command=clear_all)
 button_start = Button(frame, width=10, text="Rozpocznij", command=start_stop)
 
@@ -263,12 +261,15 @@ sl_life_3 = Scale(frame_controls, orient=HORIZONTAL, from_=1, to=10, command=lam
 sl_life_3.set(LIFE[2])
 sl_life_3.place(x=60, y=195)
 
-lab_1 = Label(frame_controls, text='1:', font=('courier new', 15))
-lab_1.place(x=20, y=113)
-lab_2 = Label(frame_controls, text='2:', font=('courier new', 15))
-lab_2.place(x=20, y=163)
-lab_3 = Label(frame_controls, text='3:', font=('courier new', 15))
-lab_3.place(x=20, y=213)
+# lab_1 = Label(frame_controls, text='1:', font=('courier new', 15))
+# lab_1.place(x=20, y=113)
+# lab_2 = Label(frame_controls, text='2:', font=('courier new', 15))
+# lab_2.place(x=20, y=163)
+# lab_3 = Label(frame_controls, text='3:', font=('courier new', 15))
+# lab_3.place(x=20, y=213)
+frame_controls.create_rectangle(21, 116, 41, 136, fill='#f1c40f')
+frame_controls.create_rectangle(21, 166, 41, 186, fill='#cb4335')
+frame_controls.create_rectangle(21, 216, 41, 236, fill='#2980b9')
 
 lab_life = Label(frame_controls, text='Punkty życia:', font=('courier new', 13))
 lab_life.place(x=27, y=67)
