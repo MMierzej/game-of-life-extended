@@ -149,6 +149,22 @@ def new_board():
 
     draw_board()
 
+def clear_all():
+    clear()
+
+    button_next['state'] = DISABLED
+    button_next_5['state'] = DISABLED
+    button_next_10['state'] = DISABLED
+
+
+def gen_board():
+    new_board()
+
+    button_next['state'] = NORMAL
+    button_next_5['state'] = NORMAL
+    button_next_10['state'] = NORMAL
+
+
 def start_stop():
     global run
     if button_start['text'] == 'Rozpocznij':
@@ -216,8 +232,10 @@ def set_spawn(val, index):
     SPAWN[index] = int(val)
 
 # utworzone przyciski
-button_generate = Button(frame, width=10, text="Generuj", command=new_board)
-button_clear = Button(frame, width=10, text="Wyczyść", command=clear)
+# button_generate = Button(frame, width=10, text="Generuj", command=new_board)
+button_generate = Button(frame, width=10, text="Generuj", command=gen_board)
+# button_clear = Button(frame, width=10, text="Wyczyść", command=clear)
+button_clear = Button(frame, width=10, text="Wyczyść", command=clear_all)
 button_start = Button(frame, width=10, text="Rozpocznij", command=start_stop)
 
 button_next = Button(frame_controls, width=10, text="1 ruch", command=lambda: step(1), state='disable')
@@ -316,6 +334,6 @@ sl_mut.set(MUT)
 sl_mut.place(x=545, y=195)
 
 new_board()
-clear()
+clear_all()
 
 root.mainloop()
