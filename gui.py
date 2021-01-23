@@ -78,18 +78,6 @@ def clicked_right(event):
     x_click = event.x // 30
     y_click = event.y // 30
 
-    # t = board[y_click][x_click][0]
-    # if t == 1:
-    #     board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[0]
-    # elif t == 2:
-    #     board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[1]
-    # elif t == 3:
-    #     board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[2]
-
-    print(board[y_click][x_click][1])
-    board[y_click][x_click][1] -= 1
-    print(board[y_click][x_click][1])
-
     if board[y_click][x_click][1] <= 0:
         board[y_click][x_click][0] = 0
         board[y_click][x_click][1] = 0
@@ -124,7 +112,7 @@ def draw_board():
                                            tags=f'{y_1},{x_1}')
             elif board[y_1][x_1][0] == 3:
                 board_gui.create_rectangle(30 * x_1 + 3, 30 * y_1 + 3, 20 + 30 * x_1 + 3, 20 + 30 * y_1 + 3,
-                                           fill='#2980b9',  # granatowy (?)
+                                           fill='#2980b9',  # niebieski
                                            tags=f'{y_1},{x_1}')
             else:
                 board_gui.create_rectangle(30 * x_1 + 3, 30 * y_1 + 3, 20 + 30 * x_1 + 3, 20 + 30 * y_1 + 3,
@@ -304,12 +292,6 @@ sl_life_3 = Scale(frame_controls, orient=HORIZONTAL, from_=1, to=10, command=lam
 sl_life_3.set(LIFE[2])
 sl_life_3.place(x=60, y=195)
 
-# lab_1 = Label(frame_controls, text='1:', font=('courier new', 15))
-# lab_1.place(x=20, y=113)
-# lab_2 = Label(frame_controls, text='2:', font=('courier new', 15))
-# lab_2.place(x=20, y=163)
-# lab_3 = Label(frame_controls, text='3:', font=('courier new', 15))
-# lab_3.place(x=20, y=213)
 frame_controls.create_rectangle(21, 116, 41, 136, fill='#f1c40f')
 frame_controls.create_rectangle(21, 166, 41, 186, fill='#cb4335')
 frame_controls.create_rectangle(21, 216, 41, 236, fill='#2980b9')
