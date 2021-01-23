@@ -349,25 +349,25 @@ sl_sf_3.place(x=320 + (fwidth - 700) // 2, y=195)
 
 # globalne zmienne dotyczace rozgrywki
 label_ctrl = Label(controls_canvas, text='Rozgrywka:', font=('courier new', 13))
-label_ctrl.place(x=515 + (fwidth - 700) // 2, y=67)
+label_ctrl.place(x=530 + (fwidth - 700) // 2, y=67)
 
 label_tempo = Label(controls_canvas, text='Tempo:', font=('courier new', 13))
-label_tempo.place(x=470 + (fwidth - 700) // 2, y=114)
+label_tempo.place(x=485 + (fwidth - 700) // 2, y=114)
 sl_tempo = Scale(controls_canvas, orient=HORIZONTAL, from_=1, to=10, command=lambda x : set_tempo(x))
 sl_tempo.set(TEMPO)
-sl_tempo.place(x=545 + (fwidth - 700) // 2, y=95)
+sl_tempo.place(x=560 + (fwidth - 700) // 2, y=95)
 
 label_mut = Label(controls_canvas, text='Mutacje:', font=('courier new', 13))
-label_mut.place(x=450 + (fwidth - 700) // 2, y=214)
+label_mut.place(x=465 + (fwidth - 700) // 2, y=214)
 sl_mut = Scale(controls_canvas, orient=HORIZONTAL, from_=0, to=10, command=lambda x : set_rand_it(x))
 sl_mut.set(MUT)
-sl_mut.place(x=545 + (fwidth - 700) // 2, y=195)
+sl_mut.place(x=560 + (fwidth - 700) // 2, y=195)
 
 label_eq = Label(controls_canvas, text='Quake:', font=('courier new', 13))
-label_eq.place(x=470 + (fwidth - 700) // 2, y=164)
+label_eq.place(x=485 + (fwidth - 700) // 2, y=164)
 sl_eq = Scale(controls_canvas, orient=HORIZONTAL, from_=0, to=10, command=lambda x : set_sub_it(x))
 sl_eq.set(QUAKE)
-sl_eq.place(x=545 + (fwidth - 700) // 2, y=145)
+sl_eq.place(x=560 + (fwidth - 700) // 2, y=145)
 
 
 new_board()
