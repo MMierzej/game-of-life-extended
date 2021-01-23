@@ -23,7 +23,6 @@ fheight = height + 350
 counter = 0
 board = [[[0, 0] for i in range(x)] for j in range(y)]
 prev = cp.deepcopy(board)
-board_d = dd(lambda : 0)
 neighbours_d = dd(lambda : 0)
 run = True
 
@@ -110,7 +109,6 @@ def draw_board():
 
 
 def clear():
-    global board_d
     global neighbours_d
     global counter
 
@@ -119,7 +117,6 @@ def clear():
             board[y_1][x_1][0] = 0
             board[y_1][x_1][1] = 0
     
-    board_d = dd(lambda: 0)
     neighbours_d = dd(lambda: 0)
     counter = 0
 
@@ -128,16 +125,12 @@ def clear():
 def new_board():
     global board
     global prev
-
-    global board_d
     global neighbours_d
-
     global counter
 
     board = generate(x, y, LIFE, SPAWN)
     prev = cp.deepcopy(board)
 
-    board_d = dd(lambda: 0)
     neighbours_d = dd(lambda: 0)
 
     counter = 0
@@ -157,31 +150,11 @@ def start_stop():
         button_start['text'] = 'Rozpocznij'
         run = False
 
-# def start():
-#     """rozpoczyna symulacje"""
-#     # button_start.place_forget()
-#     # button_stop.place(x=fwidth // 2 - 175, y=7)
-#     button_start['text'] = "Rozpocznij"
-
-#     global run
-#     run = True
-
-#     while run:
-#         step(1)
-
-# def stop():
-#     global run
-#     run = False
-
-#     button_start['text'] = "Wstrzymaj"
-#     # button_stop.place_forget()
-#     # button_start.place(x=fwidth // 2 - 175, y=7)
-
 def step(a):
     global counter
     i = 0
 
-    while i < a and not repetition(board_d, board, REP):
+    while i < a:
         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
         next_state(board, prev, neighbours_d, counter, LIFE, NB, SPAWN, QUAKE, MUT)  # ta funkcja generuje następny stan planszy (do zmiennej board)
         counter += 1
@@ -218,7 +191,6 @@ def set_spawn(val, index):
 # utworzone przyciski
 button_generate = Button(frame, width=10, text="Generuj", command=new_board)
 button_clear = Button(frame, width=10, text="Wyczyść", command=clear)
-# button_stop = Button(frame, width=10, text="Wstrzymaj", command=start)
 button_start = Button(frame, width=10, text="Rozpocznij", command=start_stop)
 
 button_next = Button(frame_controls, width=10, text="1 ruch", command=lambda: step(1))

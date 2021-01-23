@@ -36,15 +36,15 @@ def generate(width, height, LIFE, SPAWN):
     return board
 
 
-def repetition(board_d, board, REPS):
-    """ sprawdza czy plansza się zapętla """
-    string = str(board)
-    board_d[string] += 1
+# def repetition(board_d, board, REPS):
+#     """ sprawdza czy plansza się zapętla """
+#     string = str(board)
+#     board_d[string] += 1
 
-    if board_d[string] > REPS:
-        return True
+#     if board_d[string] > REPS:
+#         return True
 
-    return False
+#     return False
 
 
 def count(board):
