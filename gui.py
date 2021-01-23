@@ -10,7 +10,7 @@ NB = [3, 3, 3]
 SPAWN = [1, 1, 1]
 QUAKE = 2
 MUT = 0
-TEMPO = 9
+TEMPO = 8
 
 # zmienne wielkości okna
 x = 12
@@ -60,6 +60,16 @@ def clicked_left(event):
     y_click = event.y // 30
 
     board[y_click][x_click][0] = (board[y_click][x_click][0] + 1) % 4
+
+    if is_empty(board):
+        button_next['state'] = DISABLED
+        button_next_5['state'] = DISABLED
+        button_next_10['state'] = DISABLED
+    else:
+        button_next['state'] = NORMAL
+        button_next_5['state'] = NORMAL
+        button_next_10['state'] = NORMAL
+        
     
     draw_board()
 
