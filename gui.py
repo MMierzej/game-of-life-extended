@@ -60,6 +60,7 @@ def clicked_left(event):
     y_click = event.y // 30
 
     board[y_click][x_click][0] = (board[y_click][x_click][0] + 1) % 4
+    board[y_click][x_click][1] = LIFE[board[y_click][x_click][0] - 1]
 
     if is_empty(board):
         button_next['state'] = DISABLED
@@ -77,17 +78,27 @@ def clicked_right(event):
     x_click = event.x // 30
     y_click = event.y // 30
 
-    t = board[y_click][x_click][0]
-    if t == 1:
-        board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[0]
-    elif t == 2:
-        board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[1]
-    elif t == 3:
-        board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[2]
+    # t = board[y_click][x_click][0]
+    # if t == 1:
+    #     board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[0]
+    # elif t == 2:
+    #     board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[1]
+    # elif t == 3:
+    #     board[y_click][x_click][1] = (1 + board[y_click][x_click][1]) % LIFE[2]
 
-    if board[y_click][x_click][1] == 0:
+    print(board[y_click][x_click][1])
+    board[y_click][x_click][1] -= 1
+    print(board[y_click][x_click][1])
+
+    if board[y_click][x_click][1] <= 0:
         board[y_click][x_click][0] = 0
-    
+        board[y_click][x_click][1] = 0
+
+    if is_empty(board):
+        button_next['state'] = DISABLED
+        button_next_5['state'] = DISABLED
+        button_next_10['state'] = DISABLED
+
     draw_board()
 
 def draw_board():
