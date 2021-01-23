@@ -5,13 +5,12 @@ from logic import *
 import platform
 
 
-LIFE = [2, 4, 6]
-NB = [4, 3, 3]
-SPAWN = [1, 3, 6]
-QUAKE = 5
+LIFE = [1, 1, 1]
+NB = [3, 3, 3]
+SPAWN = [1, 1, 1]
+QUAKE = 2
 MUT = 0
-REP = 4
-TEMPO = 8
+TEMPO = 9
 
 # zmienne wielkości okna
 x = 12
@@ -83,7 +82,14 @@ def clicked_right(event):
 
 def draw_board():
     """rysuje planszę"""
-    board_gui.delete("all")
+    board_gui.delete('all')
+    
+    s1, s2, s3 = count(board)
+    s1_lab['text'] = f': {s1}'
+    s2_lab['text'] = f': {s2}'
+    s3_lab['text'] = f': {s3}'
+    gen_lab['text'] = f'Czas: {counter}'
+
 
     for y_1 in range(y):
         for x_1 in range(x):
@@ -230,6 +236,22 @@ def set_spawn(val, index):
     global SPAWN
 
     SPAWN[index] = int(val)
+
+
+# scoreboard
+canvas_scoreboard = Canvas(root, width=150, height=height + 10)
+canvas_scoreboard.place(x=5, y=60)
+canvas_scoreboard.create_rectangle(40, height // 2 - 55, 60, height // 2 - 35, fill='#f1c40f')
+canvas_scoreboard.create_rectangle(40, height // 2 - 5, 60, height // 2 + 15, fill='#cb4335')
+canvas_scoreboard.create_rectangle(40, height // 2 + 45, 60, height // 2 + 65, fill='#2980b9')
+s1_lab = Label(canvas_scoreboard, text='', font=('courier new', 13))
+s2_lab = Label(canvas_scoreboard, text='', font=('courier new', 13))
+s3_lab = Label(canvas_scoreboard, text='', font=('courier new', 13))
+s1_lab.place(x=61, y=height // 2 - 55)
+s2_lab.place(x=61, y=height // 2 - 5)
+s3_lab.place(x=61, y=height // 2 + 45)
+gen_lab = Label(root, text='', font=('courier new', 14))
+gen_lab.place(x=fwidth // 2 + width // 2 + 20, y=55 + height // 2)
 
 # utworzone przyciski
 button_generate = Button(frame, width=10, text="Generuj", command=gen_board)

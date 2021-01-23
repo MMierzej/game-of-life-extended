@@ -61,7 +61,8 @@ def count(board):
                 c_2 += 1
             elif board[i][j][0] == 3:
                 c_3 += 1
-    print('Ilość wystąpień komórek: o:', c_1, 'x:', c_2, '@:', c_3)
+
+    return (c_1, c_2, c_3)
 
 
 def draw(board):
