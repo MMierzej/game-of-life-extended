@@ -259,7 +259,7 @@ controls_canvas.create_rectangle(5, 5, fwidth - 15, 260)
 
 
 # scoreboard
-canvas_scoreboard = Canvas(root, width=100, height=height + 10)
+canvas_scoreboard = Canvas(root, width=140, height=height + 10)
 canvas_scoreboard.place(x=0, y=60)
 canvas_scoreboard.create_rectangle(40, height // 2 - 55, 60, height // 2 - 35, fill='#f1c40f')
 canvas_scoreboard.create_rectangle(40, height // 2 - 5, 60, height // 2 + 15, fill='#cb4335')
