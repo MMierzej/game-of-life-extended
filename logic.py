@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 import copy as cp
 import random
-import time
 from collections import defaultdict as dd
 
 
-""" stałe """
 DIRS = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
-
 
 def generate(width, height, LIFE, SPAWN):
     """generuje losową planszę z komorkami"""
@@ -20,15 +17,15 @@ def generate(width, height, LIFE, SPAWN):
         for j in range(width):
             p = random.uniform(0.0, 1.0)
 
-            if 0.7 <= p < 0.8 and SPAWN[0] != 0:
+            if  SPAWN[0] != 0 and 0.7 <= p < 0.8:
                 # gatunek 1
                 board[i][j][0] = 1
                 board[i][j][1] = LIFE[0]
-            elif 0.8 <= p < 0.9 and SPAWN[1] != 0:
+            elif SPAWN[1] and 0.8 <= p < 0.9:
                 # gatunek 2
                 board[i][j][0] = 2
                 board[i][j][1] = LIFE[1]
-            elif 0.9 <= p and SPAWN[2] != 0:
+            elif SPAWN[2] and 0.9 <= p:
                 # gatunek 3
                 board[i][j][0] = 3
                 board[i][j][1] = LIFE[2]
@@ -36,33 +33,22 @@ def generate(width, height, LIFE, SPAWN):
     return board
 
 
-# def repetition(board_d, board, REPS):
-#     """ sprawdza czy plansza się zapętla """
-#     string = str(board)
-#     board_d[string] += 1
-
-#     if board_d[string] > REPS:
-#         return True
-
-#     return False
-
-
 def count(board):
     """Funkcja zliczająca powtórzenia komórek"""
-    c_1 = 0
-    c_2 = 0
-    c_3 = 0
+    c1 = 0
+    c2 = 0
+    c3 = 0
 
     for i in range(len(board)):
         for j in range(len(board[0])):
             if board[i][j][0] == 1:
-                c_1 += 1
+                c1 += 1
             elif board[i][j][0] == 2:
-                c_2 += 1
+                c2 += 1
             elif board[i][j][0] == 3:
-                c_3 += 1
+                c3 += 1
 
-    return (c_1, c_2, c_3)
+    return (c1, c2, c3)
 
 
 def draw(board):
@@ -113,6 +99,7 @@ def next_state(result, prev, neighbours_d, counter, LIFE, NB, SPAWN, SUB_IT, RAN
 
     for y in range(len(prev)):
         for x in range(len(prev[0])):
+
             cell_type = prev[y][x][0]
             nb_d = count_neighbours(prev, neighbours_d, x, y)
 
@@ -137,23 +124,23 @@ def next_state(result, prev, neighbours_d, counter, LIFE, NB, SPAWN, SUB_IT, RAN
                     result[y][x][1] -= 1
 
                 if nb_d[2] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < LIFE[0] else LIFE[0]
+                    result[y][x][1] = min(prev[y][x][1] + 1, LIFE[0])
 
             elif cell_type == 2:
                 if nb_d[1] > 0:
                     result[y][x][1] -= 1
 
                 if nb_d[3] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < LIFE[1] else LIFE[1]
+                    result[y][x][1] = min(prev[y][x][1] + 1, LIFE[1])
 
             elif cell_type == 3:
                 if nb_d[2] > 0:
                     result[y][x][1] -= 1
 
                 if nb_d[1] > 0:
-                    result[y][x][1] = prev[y][x][1] + 1 if prev[y][x][1] < LIFE[2] else LIFE[2]
+                    result[y][x][1] = min(prev[y][x][1] + 1, LIFE[2])
 
-            # eliminacja zdechłych
+            # eliminacja umarłych
             if result[y][x][1] <= 0:
                 result[y][x][0] = 0
                 result[y][x][1] = 0
@@ -174,52 +161,3 @@ def next_state(result, prev, neighbours_d, counter, LIFE, NB, SPAWN, SUB_IT, RAN
             result[ry][rx][1] = LIFE[1]
         else:
             result[ry][rx][1] = LIFE[2]
-
-
-"""
-def draw(board):  
-    # funkcja wypisująca planszę do konsoli
-    for i in range(len(board)):
-        for j in range(len(board[i])):
-            if board[i][j][0] == 0:
-                print(' ', end="")
-            elif board[i][j][0] == 1:
-                print('o', end="")
-            elif board[i][j][0] == 2:
-                print('x', end="")
-            elif board[i][j][0] == 3:
-                print('@', end="")
-        print()
-"""
-
-
-# if __name__ == "__main__":
-#     # board = generate(HEIGHT, WIDTH)
-#     board = [[[0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [0, 0], [0, 0], [2, 4], [0, 0], [0, 0]],
-#              [[2, 4], [0, 0], [0, 0], [2, 4], [2, 4], [3, 6], [1, 2], [0, 0], [1, 2], [3, 6]],
-#              [[2, 4], [0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [1, 2], [2, 4], [0, 0], [0, 0]],
-#              [[3, 6], [0, 0], [1, 2], [0, 0], [3, 6], [0, 0], [0, 0], [2, 4], [0, 0], [0, 0]],
-#              [[1, 2], [3, 6], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
-#              [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [3, 6], [0, 0], [0, 0], [2, 4]],
-#              [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [2, 4], [3, 6], [0, 0], [0, 0], [0, 0]],
-#              [[0, 0], [0, 0], [0, 0], [1, 2], [1, 2], [0, 0], [0, 0], [0, 0], [2, 4], [0, 0]],
-#              [[2, 4], [2, 4], [0, 0], [0, 0], [1, 2], [0, 0], [0, 0], [2, 4], [1, 2], [0, 0]],
-#              [[0, 0], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [0, 0], [0, 0]]]
-#     prev = cp.deepcopy(board)
-#     board_d = dd(lambda: 0)
-#     neighbours_d = dd(lambda: 0)
-#     counter = 0
-
-#     while counter < 1000 and not repetition(board_d, board):
-#         if counter % REFRESH_IT == 0:
-#             draw(board)
-#             count(board)
-#             time.sleep(0.2)
-
-#         clone_board(prev, board)  # ta funkcja modyfikuje prev, zachowujemy tu stan planszy przed nową iteracją
-#         next_state(board, prev, neighbours_d, counter)  # ta funkcja generuje następny stan planszy (do zmiennej board)
-#         counter += 1
-
-#     draw(board)
-#     count(board)
-#     print("Symulacja się zapętliła." if counter < 1000 else "Koniec.")
