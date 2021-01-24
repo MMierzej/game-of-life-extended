@@ -6,20 +6,20 @@ Interaktywna graficzna implementacja automatu komórkowego *The Game of Life* Jo
  
 ## Szczegółowy opis symulacji
 
-Symulacja ma miejsce na planszy $20 \times 20$, na której mogą występować $3$ gatunki komórek:
+Symulacja ma miejsce na planszy 20 na 20, na której mogą występować 3 gatunki komórek:
 * żółty
 * czerwony
 * niebieski
 
-Plansza początkowa może zostać zdefiniowana przez użytkownika lub zostać losowo wygenerowana. Każdy z gatunków może pojawić się na danym polu losowo wygenerowanej planszy z prawdopodobieństwem $10\%$. Dodatkowo, w trakcie rozgrywki komórka danego gatunku może pojawić się na określonym polu, jeśli wokół niego znajduje się wystarczająca liczba sprzymierzeńców oraz bezpieczna liczba wrogów. Pola sąsiednie, to wszystkie pola, które przylegają do wybranego pola bokiem lub rogiem. Jeśli w trakcie rozgrywki sąsiadami zostaną komórki różnych gatunków, przebiegają między nimi potyczki opisane następującymi zasadami:
+Plansza początkowa może zostać zdefiniowana przez użytkownika lub zostać losowo wygenerowana. Każdy z gatunków może pojawić się na danym polu losowo wygenerowanej planszy z prawdopodobieństwem 10%. Dodatkowo, w trakcie rozgrywki komórka danego gatunku może pojawić się na określonym polu, jeśli wokół niego znajduje się wystarczająca liczba sprzymierzeńców oraz bezpieczna liczba wrogów. Pola sąsiednie, to wszystkie pola, które przylegają do wybranego pola bokiem lub rogiem. Jeśli w trakcie rozgrywki sąsiadami zostaną komórki różnych gatunków, przebiegają między nimi potyczki opisane następującymi zasadami:
 * żółty pokonuje czerwonego
 * czerwony pokonuje niebieskiego
 * niebieski pokonuje żółtego
-* wygrany otrzymuje $1$ punkt życia, przegranemu odejmowany jest $1$ punkt życia
+* wygrany otrzymuje 1 punkt życia, przegranemu odejmowany jest 1 punkt życia
 * jeśli komórka straci wszystkie punkty życia, to zajmowane przez nią pole staje się wolne
 
 Na przebieg symulacji wpływ mają parametry:
-* Quake - trzęsienie ziemi, które odejmuje każdej żywej komórce $1$ punkt życia
+* Quake - trzęsienie ziemi, które odejmuje każdej żywej komórce 1 punkt życia
 * Mutacje - losowe pole zmienia swój stan
 * Tempo - określa przybliżoną prędkość rozgrywki
 
@@ -70,9 +70,9 @@ Będąc w katalogu, do którego pobrano repozytorium, należy wykonać polecenie
 * Rozpocznij - rozpoczyna symulację (jeżeli plansza jest pusta, generuje nową)
 * Generuj - generuje nową planszę
 * Wyczyść - powoduje wyczyszczenie planszy (jeżeli trwa symulacja - zatrzymuje ją)
-* $1$, $5$, $10$ ruch/-ów - wykonuje podaną liczbę iteracji symulacji
+* 1, 5, 10 ruch/-ów - wykonuje podaną liczbę iteracji symulacji
 * Lewy przycisk myszy na polu - zmienia gatunek komórki
-* Prawy przycisk myszy na polu - odejmuje komórce $1$ punkt życia
+* Prawy przycisk myszy na polu - odejmuje komórce 1 punkt życia
 * Punkty życia - określa liczbę punktów życia, z którą rodzi się komórka danego gatunku
 * Sąsiedzi - wymagana liczba sprzymierzeńców, aby komórka danego gatunku mogła się narodzić
 * Reprodukcja - liczba iteracji, po których może się narodzić nowa komórka danego gatunku
