@@ -372,7 +372,6 @@ sl_eq.set(QUAKE)
 sl_eq.place(x=560 + (fwidth - 700) // 2, y=145)
 
 
-new_board()
 clear_all()
 
 root.mainloop()
